@@ -13,11 +13,11 @@ import dart from '../app/assets/svg/skills/dart.svg';
 import docker from '../app/assets/svg/skills/docker.svg';
 import fastify from '../app/assets/svg/skills/fastify.svg';
 import figma from '../app/assets/svg/skills/figma.svg';
-// import firebase from '../app/assets/svg/skills/firebase.svg';
+import firebase from '../app/assets/svg/skills/firebase.svg';
 import flutter from '../app/assets/svg/skills/flutter.svg';
 import gcp from '../app/assets/svg/skills/gcp.svg';
 // import gimp from '../app/assets/svg/skills/gimp.svg';
-// import git from '../app/assets/svg/skills/git.svg';
+import git from '../app/assets/svg/skills/git.svg';
 import go from '../app/assets/svg/skills/go.svg';
 // import graphql from '../app/assets/svg/skills/graphql.svg';
 import haxe from '../app/assets/svg/skills/haxe.svg';
@@ -152,6 +152,10 @@ export const skillsImage = (skill) => {
       return wolframalpha;
     case 'canva':
       return canva;
+    case 'git':
+      return git;
+    case 'firebase':
+      return firebase;
     default:
       break;
   }

@@ -1,7 +1,6 @@
 "use client";
 // @flow strict
 import { isValidEmail } from "@/utils/check-email";
-import emailjs from '@emailjs/browser';
 import { useRef, useState } from "react";
 import { TbMailForward } from "react-icons/tb";
 import { toast } from "react-toastify";
@@ -44,27 +43,21 @@ function ContactForm() {
     try {
       setIsLoading(true);
       
-      const templateParams = {
-        to_email: 'Himachalkumar75@gmail.com',
-        from_name: userInput.name,
-        from_email: userInput.email,
-        message: userInput.message
-      };
-      
-      const result = await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-        templateParams,
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
-      );
-
-      console.log("Email sent:", {
-        status: result.status,
-        text: result.text,
-        params: templateParams
+      const response = await fetch("https://formsubmit.co/ajax/Himachalkumar75@gmail.com", {
+        method: "POST",
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            name: userInput.name,
+            email: userInput.email,
+            message: userInput.message,
+            _subject: "New Message from Portfolio Website!"
+        })
       });
 
-      if (result.status === 200) {
+      if (response.ok) {
         toast.success("Message sent successfully! 🎉", {
           position: "top-center",
           autoClose: 3000,
@@ -86,13 +79,7 @@ function ContactForm() {
         });
       }
     } catch (error) {
-      console.error("Detailed error:", {
-        error: error,
-        env: {
-          serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-          templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-        }
-      });
+      console.error("Detailed error:", error);
       toast.error("Failed to send message. Please try again!", {
         position: "top-center",
         autoClose: 3000,
